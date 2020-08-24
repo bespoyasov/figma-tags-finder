@@ -1,0 +1,7 @@
+{
+  "name": "tags-finder",
+  "id": "868052695580663683",
+  "api": "1.0.0",
+  "main": "dist/code.js",
+  "ui": "dist/ui.html"
+}
