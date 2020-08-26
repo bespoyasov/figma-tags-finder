@@ -44,5 +44,6 @@ export function sendMessage<TPayload extends MessagePayload>(
 
 export function extractGroupName({ characters }: TextNode): GroupName {
   const firstLineBreak = characters.search(/\n/);
-  return characters.slice(0, firstLineBreak);
+  const endPosition = firstLineBreak >= 0 ? firstLineBreak : characters.length;
+  return characters.slice(0, endPosition);
 }
