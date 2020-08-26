@@ -6,7 +6,7 @@
   "scripts": {
     "test": "npx jest",
     "start": "npx webpack --mode=development --watch",
-    "build": "npx webpack --mode=production"
+    "build": "npm test && npx webpack --mode=production"
   },
   "author": "",
   "license": "",
