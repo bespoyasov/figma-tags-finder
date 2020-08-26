@@ -1,4 +1,4 @@
-import { extractGroupName, locatorNameFor } from "./core";
+import { extractGroupName, locatorNameFor, parseLocatorName } from "./core";
 
 function assureType<TType>(entity: unknown): TType {
   return <TType>entity;
@@ -22,5 +22,12 @@ describe("utils > core > locatorNameFor", () => {
     const quoteRangeEnd = 100;
     const result = locatorNameFor("nodeId", quoteRangeStart, quoteRangeEnd);
     expect(result).toEqual("nodeId/0:100");
+  });
+});
+
+describe("utils > core > parseLocatorName", () => {
+  it("should split a locator name into a node ID and a quote range", () => {
+    const locator = "nodeId/0:100";
+    expect(parseLocatorName(locator)).toEqual(["nodeId", "0:100"]);
   });
 });
