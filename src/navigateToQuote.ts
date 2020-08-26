@@ -1,7 +1,15 @@
-import { findTextNodes } from "./utils/core";
 import { Quote } from "./types/quote";
+import { FigmaType } from "./types/figma";
+import { findTextNodes } from "./utils/core";
 
-export function navigateToQuote({ original: text }: Quote): void {
+type Dependencies = {
+  framework: FigmaType;
+};
+
+export function navigateToQuote(
+  { original: text }: Quote,
+  { framework }: Dependencies = { framework: figma }
+): void {
   const textNodes = findTextNodes();
   const target = textNodes.find((node) => node.characters.includes(text));
   if (!target) return;
@@ -15,10 +23,11 @@ export function navigateToQuote({ original: text }: Quote): void {
 
   const area = width * height;
   const approximateArealPosition = area * fractionalPosition;
-  const approximateScrollTop = approximateArealPosition / width + 100;
+  const approximateScrollTop =
+    Math.round(approximateArealPosition / width) + 100;
 
-  figma.viewport.zoom = 1.5;
-  figma.viewport.center = {
+  framework.viewport.zoom = 1.5;
+  framework.viewport.center = {
     x: x + width / 2,
     y: y + approximateScrollTop,
   };
