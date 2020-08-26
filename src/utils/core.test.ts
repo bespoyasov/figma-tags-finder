@@ -1,8 +1,5 @@
 import { extractGroupName, locatorNameFor, parseLocatorName } from "./core";
-
-function assureType<TType>(entity: unknown): TType {
-  return <TType>entity;
-}
+import { assureType } from "./infrastructure";
 
 describe("utils > core > extractGroupName", () => {
   it("should return a string of characters from the start to the first line-break", () => {
