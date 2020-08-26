@@ -10,7 +10,7 @@ import {
 
 import { sendMessage, parseLocatorName } from "./utils/core";
 import { indexText as indexTextAndThen } from "./indexText";
-import { textLocatorToQuote } from "./rangeLocatorToQuote";
+import { textLocatorToQuote } from "./textLocatorToQuote";
 import { navigateToQuote } from "./navigateToQuote";
 
 const STORAGE_KEY = "tags-finder-index";
