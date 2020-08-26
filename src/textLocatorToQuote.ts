@@ -1,13 +1,19 @@
 import { Quote } from "./types/quote";
+import { FigmaType } from "./types/figma";
 import { CompoundTextRangeLocator, CharactersCount } from "./types/indexing";
 import { parseLocatorName, extractGroupName } from "./utils/core";
 
+type Dependencies = {
+  framework: FigmaType;
+};
+
 export function textLocatorToQuote(
   nodeId: CompoundTextRangeLocator,
-  takeNearest: CharactersCount = 0
+  takeNearest: CharactersCount = 0,
+  { framework }: Dependencies = { framework: figma }
 ): Quote {
   const [id, location] = parseLocatorName(nodeId);
-  const node = <TextNode>figma.getNodeById(id);
+  const node = <TextNode>framework.getNodeById(id);
   const group = extractGroupName(node);
   const { characters } = node;
 
