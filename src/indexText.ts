@@ -1,4 +1,6 @@
-import { isMixedStyle, locatorNameFor, findTextNodes } from "./utils/core";
+import { isMixedStyle } from "./utils/core/isMixedStyle";
+import { findTextNodes } from "./utils/core/findTextNodes";
+import { locatorNameFor } from "./utils/core/locatorNameFor";
 import {
   IndexReadyCallback,
   IndexBatchSize,
