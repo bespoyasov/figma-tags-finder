@@ -21,7 +21,7 @@ export function indexText(onReady: IndexReadyCallback) {
 async function processNode(node: TextNode) {
   const mileStones = !isMixedStyle(node.textStyleId)
     ? [node.characters.length]
-    : binarySearch(node);
+    : await binarySearch(node);
 
   return fromRangeBoundaries(node, mileStones);
 }
