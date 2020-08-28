@@ -1,6 +1,6 @@
 import { Quote } from "./types/quote";
 import { FigmaType } from "./types/figma";
-import { CompoundTextRangeLocator, CharactersCount } from "./types/indexing";
+import { CompoundRangeLocator, CharactersCount } from "./types/indexing";
 import { parseLocatorName, extractGroupName } from "./utils/core";
 
 type Dependencies = {
@@ -8,7 +8,7 @@ type Dependencies = {
 };
 
 export function textLocatorToQuote(
-  nodeId: CompoundTextRangeLocator,
+  nodeId: CompoundRangeLocator,
   takeNearest: CharactersCount = 0,
   { framework }: Dependencies = { framework: figma }
 ): Quote {

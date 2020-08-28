@@ -1,13 +1,10 @@
 import { NodeId } from "../../types/figma";
-import {
-  TextCursorLocation,
-  CompoundTextRangeLocator,
-} from "../../types/indexing";
+import { TextCursorLocation, CompoundRangeLocator } from "../../types/indexing";
 
 export function locatorNameFor(
   nodeId: NodeId,
   start: TextCursorLocation,
   end: TextCursorLocation
-): CompoundTextRangeLocator {
+): CompoundRangeLocator {
   return `${nodeId}/${start}:${end}`;
 }

@@ -5,7 +5,7 @@ import { Tag } from "./types/tag";
 import {
   IndexByTextStyleId,
   CharactersCount,
-  CompoundTextRangeLocator,
+  CompoundRangeLocator,
 } from "./types/indexing";
 
 import { sendMessage, parseLocatorName } from "./utils/core";
@@ -58,7 +58,7 @@ async function showQuotes(id: TextStyleId, takeNearest: CharactersCount = 0) {
   const index = await figma.clientStorage.getAsync(STORAGE_KEY);
   const locators = index[id];
   const quotes = locators.map(
-    (locator: CompoundTextRangeLocator): Quote =>
+    (locator: CompoundRangeLocator): Quote =>
       textLocatorToQuote(locator, takeNearest)
   );
 
