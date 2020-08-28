@@ -7,15 +7,21 @@ import { binarySearch } from "./binarySearch";
 
 export function indexText(onReady: IndexReadyCallback) {
   const nodes = findTextNodes();
-  let index = {};
+  const promises = nodes.map(processNode);
 
-  for (const node of nodes) {
-    const mileStones = !isMixedStyle(node.textStyleId)
-      ? [node.characters.length]
-      : binarySearch(node);
+  Promise.all(promises).then((indices) => {
+    const index = indices.reduce((total, part) => {
+      return { ...total, ...part };
+    }, {});
 
-    index = { ...index, ...fromRangeBoundaries(node, mileStones) };
-  }
+    onReady(invertIndex(index));
+  });
+}
 
-  onReady(invertIndex(index));
+async function processNode(node: TextNode) {
+  const mileStones = !isMixedStyle(node.textStyleId)
+    ? [node.characters.length]
+    : binarySearch(node);
+
+  return fromRangeBoundaries(node, mileStones);
 }
