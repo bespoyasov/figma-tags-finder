@@ -2,7 +2,7 @@ import { TextCursorLocation, MileStones } from "./types/indexing";
 import { hasMixedRange } from "./utils/core/hasMixedRange";
 import { xor } from "./utils/core/xor";
 
-export function applyBinarySearch(
+export function binarySearch(
   node: TextNode,
   searchStart: TextCursorLocation = 0,
   searchEnd: TextCursorLocation = node.characters.length,
@@ -24,11 +24,11 @@ export function applyBinarySearch(
 
   if (mixedLeftHalf) {
     return !neighborMixed
-      ? applyBinarySearch(node, middle - 1, textEnd, mileStones)
-      : applyBinarySearch(node, searchStart, middle, mileStones);
+      ? binarySearch(node, middle - 1, textEnd, mileStones)
+      : binarySearch(node, searchStart, middle, mileStones);
   } else {
     return neighborMixed
-      ? applyBinarySearch(node, middle, textEnd, mileStones)
-      : applyBinarySearch(node, middle, searchEnd, mileStones);
+      ? binarySearch(node, middle, textEnd, mileStones)
+      : binarySearch(node, middle, searchEnd, mileStones);
   }
 }
