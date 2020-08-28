@@ -15,7 +15,7 @@ export async function binarySearch(
   if (searchStart >= middle) return mileStones;
   if (!hasMixedRange(node, searchStart, searchEnd)) return mileStones;
 
-  await wait();
+  if (mileStones.length % 2) await wait();
 
   const mixedLeftHalf = hasMixedRange(node, searchStart, middle);
   const neighborToCheck = mixedLeftHalf ? middle - 1 : middle + 1;
