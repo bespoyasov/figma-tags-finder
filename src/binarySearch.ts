@@ -1,6 +1,10 @@
 import { TextCursorLocation, MileStones } from "./types/indexing";
 import { hasMixedRange } from "./utils/core/hasMixedRange";
 
+function xor(a: unknown, b: unknown): boolean {
+  return (!!a && !b) || (!a && !!b);
+}
+
 export function applyBinarySearch(
   node: TextNode,
   searchStart: TextCursorLocation = 0,
@@ -13,25 +17,21 @@ export function applyBinarySearch(
   if (searchStart >= middle) return mileStones;
   if (!hasMixedRange(node, searchStart, searchEnd)) return mileStones;
 
-  if (hasMixedRange(node, searchStart, middle)) {
-    const prev = middle - 1;
-    const prevMixed = hasMixedRange(node, searchStart, prev);
+  const mixedLeftHalf = hasMixedRange(node, searchStart, middle);
+  const neighbor = mixedLeftHalf ? middle - 1 : middle + 1;
+  const neighborMixed = hasMixedRange(node, searchStart, neighbor);
 
-    if (!prevMixed) {
-      mileStones.push(prev);
-      return applyBinarySearch(node, prev, textEnd, mileStones);
-    }
+  const shouldAppendMileStone = xor(mixedLeftHalf, neighborMixed);
+  const mileStone = mixedLeftHalf ? middle - 1 : middle;
+  if (shouldAppendMileStone) mileStones.push(mileStone);
 
-    return applyBinarySearch(node, searchStart, middle, mileStones);
+  if (mixedLeftHalf) {
+    return !neighborMixed
+      ? applyBinarySearch(node, middle - 1, textEnd, mileStones)
+      : applyBinarySearch(node, searchStart, middle, mileStones);
   } else {
-    const next = middle + 1;
-    const nextMixed = hasMixedRange(node, searchStart, next);
-
-    if (nextMixed) {
-      mileStones.push(middle);
-      return applyBinarySearch(node, middle, textEnd, mileStones);
-    }
-
-    return applyBinarySearch(node, middle, searchEnd, mileStones);
+    return neighborMixed
+      ? applyBinarySearch(node, middle, textEnd, mileStones)
+      : applyBinarySearch(node, middle, searchEnd, mileStones);
   }
 }
