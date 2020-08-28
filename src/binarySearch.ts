@@ -1,4 +1,4 @@
-import { TextCursorLocation, MileStones } from "./types/indexing";
+import { TextCursorLocation, RangeRightBoundary } from "./types/indexing";
 import { hasMixedRange } from "./utils/core/hasMixedRange";
 import { xor } from "./utils/core/xor";
 
@@ -6,8 +6,8 @@ export function binarySearch(
   node: TextNode,
   searchStart: TextCursorLocation = 0,
   searchEnd: TextCursorLocation = node.characters.length,
-  mileStones: MileStones = []
-): MileStones {
+  mileStones: RangeRightBoundary[] = []
+): RangeRightBoundary[] {
   const textEnd = node.characters.length;
   const middle = searchStart + Math.ceil((searchEnd - searchStart) / 2);
 
