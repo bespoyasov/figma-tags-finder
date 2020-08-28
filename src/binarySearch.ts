@@ -15,8 +15,8 @@ export function binarySearch(
   if (!hasMixedRange(node, searchStart, searchEnd)) return mileStones;
 
   const mixedLeftHalf = hasMixedRange(node, searchStart, middle);
-  const neighbor = mixedLeftHalf ? middle - 1 : middle + 1;
-  const neighborMixed = hasMixedRange(node, searchStart, neighbor);
+  const neighborToCheck = mixedLeftHalf ? middle - 1 : middle + 1;
+  const neighborMixed = hasMixedRange(node, searchStart, neighborToCheck);
 
   const shouldAppendMileStone = xor(mixedLeftHalf, neighborMixed);
   const mileStone = mixedLeftHalf ? middle - 1 : middle;
