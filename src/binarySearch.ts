@@ -1,9 +1,6 @@
 import { TextCursorLocation, MileStones } from "./types/indexing";
 import { hasMixedRange } from "./utils/core/hasMixedRange";
-
-function xor(a: unknown, b: unknown): boolean {
-  return (!!a && !b) || (!a && !!b);
-}
+import { xor } from "./utils/core/xor";
 
 export function applyBinarySearch(
   node: TextNode,
