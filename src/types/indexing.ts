@@ -12,3 +12,6 @@ export type IndexByTextStyleId = Record<
   TextStyleId,
   CompoundTextRangeLocator[]
 >;
+
+export type StyleSegmentEnd = TextCursorLocation;
+export type MileStones = StyleSegmentEnd[];
