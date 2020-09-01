@@ -1,69 +1,27 @@
+import { IndexReadyCallback } from "./types/indexing";
+import { fromRangeBoundaries } from "./utils/core/fromRangeBoundaries";
 import { isMixedStyle } from "./utils/core/isMixedStyle";
 import { findTextNodes } from "./utils/core/findTextNodes";
-import { locatorNameFor } from "./utils/core/locatorNameFor";
-import {
-  IndexReadyCallback,
-  IndexBatchSize,
-  IndexByRangeLocator,
-  TextCursorLocation,
-  IndexByTextStyleId,
-} from "./types/indexing";
+import { invertIndex } from "./utils/core/invertIndex";
+import { binarySearch } from "./binarySearch";
 
-export async function indexText(
-  onReady: IndexReadyCallback,
-  batchSize: IndexBatchSize = 100
-): Promise<void> {
-  const index: IndexByRangeLocator = {};
+export function indexText(onReady: IndexReadyCallback) {
   const nodes = findTextNodes();
-  const total = nodes.length;
-  let processed = 0;
+  const promises = nodes.map(processNode);
 
-  for (const node of nodes) {
-    if (!isMixedStyle(node.textStyleId)) indexPlainText(node);
-    else indexMixedText(node);
-  }
+  Promise.all(promises).then((indices) => {
+    const index = indices.reduce((total, part) => {
+      return { ...total, ...part };
+    }, {});
 
-  function indexPlainText(node: TextNode): void {
-    const { id, textStyleId } = node;
-    index[id] = textStyleId as string;
-    onFinishIndexing(index);
-  }
+    onReady(invertIndex(index));
+  });
+}
 
-  function indexMixedText(
-    node: TextNode,
-    prevRangeEnd: TextCursorLocation = 0,
-    start: TextCursorLocation = 0
-  ): void {
-    let from = prevRangeEnd;
-    const { characters, id: nodeId } = node;
-    const end = Math.min(start + batchSize, characters.length);
+async function processNode(node: TextNode) {
+  const mileStones = !isMixedStyle(node.textStyleId)
+    ? [node.characters.length]
+    : await binarySearch(node);
 
-    for (let current: TextCursorLocation = start; current < end; current++) {
-      const nextCharacterStyleId = node.getRangeTextStyleId(from, current + 1);
-      if (!isMixedStyle(nextCharacterStyleId)) continue;
-
-      const textStyleId = <string>node.getRangeTextStyleId(from, current);
-      index[locatorNameFor(nodeId, from, current)] = textStyleId;
-      from = current;
-      start = current;
-    }
-
-    if (start >= characters.length) onFinishIndexing(index);
-    else setTimeout(() => indexMixedText(node, from, end));
-  }
-
-  async function onFinishIndexing(source: IndexByRangeLocator): Promise<void> {
-    if (++processed < total) return;
-
-    const locatorIds = Object.keys(source);
-    const converted: IndexByTextStyleId = {};
-
-    locatorIds.forEach((locator) => {
-      const value = source[locator];
-      converted[value] = converted[value] || [];
-      converted[value].push(locator);
-    });
-
-    onReady(converted);
-  }
+  return fromRangeBoundaries(node, mileStones);
 }
