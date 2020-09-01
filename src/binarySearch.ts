@@ -7,7 +7,8 @@ export async function binarySearch(
   node: TextNode,
   searchStart: TextCursorLocation = 0,
   searchEnd: TextCursorLocation = node.characters.length,
-  mileStones: RangeRightBoundary[] = []
+  mileStones: RangeRightBoundary[] = [],
+  calledBefore: number = 0
 ): Promise<RangeRightBoundary[]> {
   const textEnd = node.characters.length;
   const middle = searchStart + Math.ceil((searchEnd - searchStart) / 2);
@@ -15,7 +16,7 @@ export async function binarySearch(
   if (searchStart >= middle) return mileStones;
   if (!hasMixedRange(node, searchStart, searchEnd)) return mileStones;
 
-  if (mileStones.length % 2) await wait();
+  if (++calledBefore % 2) await wait();
 
   const mixedLeftHalf = hasMixedRange(node, searchStart, middle);
   const neighborToCheck = mixedLeftHalf ? middle - 1 : middle + 1;
@@ -27,11 +28,11 @@ export async function binarySearch(
 
   if (mixedLeftHalf) {
     return !neighborMixed
-      ? binarySearch(node, middle - 1, textEnd, mileStones)
-      : binarySearch(node, searchStart, middle, mileStones);
+      ? binarySearch(node, middle - 1, textEnd, mileStones, calledBefore)
+      : binarySearch(node, searchStart, middle, mileStones, calledBefore);
   } else {
     return neighborMixed
-      ? binarySearch(node, middle, textEnd, mileStones)
-      : binarySearch(node, middle, searchEnd, mileStones);
+      ? binarySearch(node, middle, textEnd, mileStones, calledBefore)
+      : binarySearch(node, middle, searchEnd, mileStones, calledBefore);
   }
 }
