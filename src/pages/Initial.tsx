@@ -30,7 +30,7 @@ export const InitialPage: React.FC = () => {
     <>
       <header>
         <button type="button" onClick={indexText}>
-          Index Text
+          Найти все теги
         </button>
       </header>
 

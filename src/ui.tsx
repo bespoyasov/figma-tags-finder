@@ -23,7 +23,7 @@ const App: React.FC = () => {
           return setQuotes(data);
 
         case MessageKind.FINISH_INDEXING:
-          return alert("Indexing completed!");
+          return alert("Все теги найдены!");
 
         default:
           throw new Error(`Unknown message kind in UI ${type}.`);

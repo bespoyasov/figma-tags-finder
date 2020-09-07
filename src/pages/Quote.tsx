@@ -37,10 +37,10 @@ export const QuotePage: React.FC = () => {
     <>
       <header>
         <button type="button" onClick={showStartPage}>
-          Back to list
+          Вернуться в список
         </button>{" "}
         <div>
-          Take{" "}
+          Учесть{" "}
           <label>
             <input
               type="number"
@@ -50,7 +50,7 @@ export const QuotePage: React.FC = () => {
               value={nearest}
               onChange={updateQuoteRange}
             />{" "}
-            nearest characters around.
+            символов вокруг цитаты.
           </label>
         </div>
       </header>
