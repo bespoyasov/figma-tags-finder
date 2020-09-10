@@ -1,6 +1,6 @@
 {
   "name": "tags-finder",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Finds texts with a given tag and selects them.",
   "main": "code.js",
   "scripts": {
