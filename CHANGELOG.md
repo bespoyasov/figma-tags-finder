@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/bespoyasov/figma-tags-finder/compare/v1.0.1...v1.1.0) (2020-09-15)
+
+
+### Features
+
+* slightly decrease the zoom value after navgiating to a quote ([929b91f](https://github.com/bespoyasov/figma-tags-finder/commit/929b91f22bc1faccdd50b42df5f9e274e9350040))
+
 ## [1.0.1](https://github.com/bespoyasov/figma-tags-finder/compare/v1.0.0...v1.0.1) (2020-09-10)
 
 
