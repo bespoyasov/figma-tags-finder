@@ -26,7 +26,7 @@ export function navigateToQuote(
   const approximateScrollTop =
     Math.round(approximateArealPosition / width) + 100;
 
-  framework.viewport.zoom = 1.5;
+  framework.viewport.zoom = 1.2;
   framework.viewport.center = {
     x: x + width / 2,
     y: y + approximateScrollTop,
