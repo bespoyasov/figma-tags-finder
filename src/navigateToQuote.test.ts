@@ -53,8 +53,8 @@ describe("navigateToQuote", () => {
     expect(centerMock).toHaveBeenCalledWith({ x: 600, y: 2452 });
   });
 
-  it("should zoom viewport to 1.5 if a quote has been found", () => {
+  it("should zoom viewport to 1.2 if a quote has been found", () => {
     navigateToQuote(quote, { framework: figmaMock });
-    expect(zoomMock).toHaveBeenCalledWith(1.5);
+    expect(zoomMock).toHaveBeenCalledWith(1.2);
   });
 });
